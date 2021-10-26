@@ -2,6 +2,7 @@ import 'package:chat/components/primary_button.dart';
 import 'package:chat/constants.dart';
 import 'package:chat/screens/chats/chats_screen.dart';
 import 'package:chat/screens/sign_up/sign_up.dart';
+
 import 'package:flutter/material.dart';
 
 class SigninOrSignupScreen extends StatelessWidget {
@@ -41,6 +42,7 @@ class SigninOrSignupScreen extends StatelessWidget {
                   ),
                 ),
               ),
+
               Spacer(flex: 2),
             ],
           ),

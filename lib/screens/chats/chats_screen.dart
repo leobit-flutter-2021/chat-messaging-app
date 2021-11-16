@@ -1,5 +1,7 @@
-import 'package:chat/constants.dart';
+import 'package:chat/redux/actions.dart';
+import 'package:chat/redux/states.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_redux/flutter_redux.dart';
 
 import 'components/body.dart';
 
@@ -12,18 +14,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
   int _selectedIndex = 1;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: buildAppBar(),
-      body: Body(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: kPrimaryColor,
-        child: Icon(
-          Icons.person_add_alt_1,
-          color: Colors.white,
-        ),
-      ),
-      bottomNavigationBar: buildBottomNavigationBar(),
+    return StoreConnector<ScreenMode, dynamic>(
+      builder: (context, state) {
+        return Scaffold(
+          backgroundColor: state.backgroundColor,
+          appBar: buildAppBar(),
+          body: Body(),
+          floatingActionButton: changeScreenMode(context, state.isDark),
+          bottomNavigationBar: buildBottomNavigationBar(),
+        );
+      },
+      converter: (store) => store.state,
     );
   }
 
@@ -63,4 +64,20 @@ class _ChatsScreenState extends State<ChatsScreen> {
       ],
     );
   }
+}
+
+Widget changeScreenMode(BuildContext context, bool isDark) {
+  return StoreConnector<ScreenMode, dynamic>(
+    builder: (context, callback) {
+      return FloatingActionButton(
+          child: (isDark)
+              ? const Icon(Icons.light_mode_outlined)
+              : const Icon(Icons.dark_mode_outlined),
+          onPressed: () => callback(isDark),
+          backgroundColor: Colors.blueGrey);
+    },
+    converter: (store) {
+      return (isDarkMode) => store.dispatch(ChangeScreenMode(isDarkMode));
+    },
+  );
 }

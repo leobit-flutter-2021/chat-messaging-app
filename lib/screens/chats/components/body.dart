@@ -29,10 +29,8 @@ class Body extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemCount: chatsData.length,
-            itemBuilder: (context, index) => ChatCard(
-              chat: chatsData[index],
-              press: () => {}
-            ),
+            itemBuilder: (context, index) =>
+                ChatCard(chat: chatsData[index], press: () => {}),
           ),
         ),
       ],
